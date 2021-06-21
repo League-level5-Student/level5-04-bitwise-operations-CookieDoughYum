@@ -56,7 +56,7 @@ public class DecimalToBinary {
 		 * 
 		*/
 		
-		System.out.println( convertDecimalToBinary( 43 ) );
+		System.out.println( convertDecimalToBinary( -63 ) );
 	}
 	
     public static String convertDecimalToBinary(int decimalNum) {
@@ -79,5 +79,13 @@ public class DecimalToBinary {
         } while( decimalNum != 0 );
         
         return binaryStr;
+        
+        /*
+        *Negative Decimal To Binary:
+        *1. Get Binary of Abs. Value
+        *2. Convert 0's to 1's and 1's to 0's *Called 1's complement
+        *3. Add that binary to 0000 0001 * always start at the right collumn
+        *4. If the last digit of the 1's complement is a 1, then set the previous digit to a 1, and set the far right digit to a 0
+        */
     }
 }
