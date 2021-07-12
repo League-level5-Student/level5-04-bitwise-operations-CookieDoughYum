@@ -59,82 +59,38 @@ public class DecimalToBinary {
 		*/
 	
 		//convertDecimalToBinary(-72);
-		System.out.println( convertDecimalToBinary( -72 ) );
+		System.out.println( convertDecimalToBinary( 72 ) );
 	}
 	
     public static String convertDecimalToBinary(int decimalNum) {
-        String binaryStr = "";
-    
+    	String binaryStr = "";
+    	decimalNum=~decimalNum;
+        decimalNum+=1;
         do {
             // 1. Logical right shift by 1
-            int quotient = Math.abs(decimalNum) >>> 1;
-        
+            int quotient = decimalNum >>> 1;
+
             // 2. Check remainder and add '1' or '0'
-            if(Math.abs(decimalNum) % 2 != 0 ){
+            if(decimalNum % 2 != 0 ){
                 binaryStr = '1' + binaryStr;
             } else {
                 binaryStr = '0' + binaryStr;
             }
-            
-            decimalNum = quotient;
-            
+            decimalNum=quotient;
         // 3. Repeat until number is 0
         } while( decimalNum != 0 );
         
-    	  String tempValue="";
-    	  ArrayList<Character> binaryValues=new ArrayList<Character>();
-    	  //ArrayList<Character> NumValues=new ArrayList<Character>();
-    	  
-    	  for(int i=0; i<binaryStr.length(); i++) {
-    		 if(binaryStr.charAt(i)=='0') {
-    			 binaryValues.add('1');
-    		 }
-    		 else if(binaryStr.charAt(i)=='1') {
-    			 binaryValues.add('0');
-    		 }
-    	  }
-    	  
-    	  for(int j=0; j<binaryValues.size(); j++) {
-    		  tempValue=tempValue+binaryValues.get(j);
-    	  }
-    	  
-    	  //System.out.println(binaryStr);
-    	  //System.out.println(tempValue);
-    	  
-    	  String realValue="";
-    	  int length=tempValue.length()-1;
-    	  int length2=tempValue.length()-2;
-    	  
-    	  if(tempValue.charAt(tempValue.length()-1)=='0') {
-    		  realValue=tempValue+1;
-    	  }
-    	  else if(tempValue.charAt(length)=='1') {
-    		  //length-1 is set to 0 and length-2 is set to 1
-    		  
-    		  for (char ch: tempValue.toCharArray()) {
-    			  int index=tempValue.indexOf(ch);
-    			  if(index!=length || index!=length2) {
-    				  System.out.println();
-    				  realValue.concat(String.valueOf(ch));
-    			  }
-    			  else if(index==length2) {
-    				  realValue.concat("1");
-    			  }
-    			  else if(index==length){
-    				  realValue.concat("0");
-    			  }
-    			  //realValue=realValue+ch;
-    		  }
-    	  }
-    	  
-          return realValue;
+        return(binaryStr);
         
+        
+       
         /*
         *Negative Decimal To Binary:
         *1. Get Binary of Abs. Value
         *2. Convert 0's to 1's and 1's to 0's *Called 1's complement
         *3. Add that binary to 0000 0001 * always start at the right collumn
-        *4. If the last digit of the 1's complement is a 1, then set the previous digit to a 1, and set the far right digit to a 0
+        
         */
     }
+
 }
