@@ -53,12 +53,16 @@ public class Base64Decoder {
 	public static byte[] convert4CharsTo24Bits(String s){
 		char [] charToBytes= s.toCharArray();
 		ArrayList<Byte> byteEliminator=new ArrayList<Byte>();
-		byte [] finalArray;
+		byte [] finalArray = null;
 		for(int i=0; i<s.length(); i++) {
 			byteEliminator.add(convertBase64Char(charToBytes[i]));
 		}
 		for(int j=0; j<byteEliminator.size(); j++) {
-			finalArray[j]=(byte) ((byteEliminator.get(j) >> 2)(byteEliminator.get(j) ^ 11+=byteEliminator.get(j));
+			//byte elimination=(byte) (byteEliminator.get(j)^11);
+			//finalArray[j]=(byte) ((byteEliminator.get(j) >> 2)(elimination+byteEliminator.get(j)));
+			finalArray[0]=(byte) ((byteEliminator.get(0)<<2) + (((byteEliminator.get(1)<<2) & 0b110000)>>4));
+			finalArray[1]=(byte) ((byteEliminator.get(1)<<4) + (((byteEliminator.get(2)<<2) & 0b110100)>>2));
+			finalArray[2]=(byte) ((byteEliminator.get(2)<<6) +  ((byteEliminator.get(3)<<2)));
 		}
 		return finalArray;
 	}
