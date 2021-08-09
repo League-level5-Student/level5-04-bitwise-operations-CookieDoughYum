@@ -53,16 +53,17 @@ public class Base64Decoder {
 	public static byte[] convert4CharsTo24Bits(String s){
 		char [] charToBytes= s.toCharArray();
 		ArrayList<Byte> byteEliminator=new ArrayList<Byte>();
-		byte [] finalArray = null;
+		byte [] finalArray=new byte[3];
 		for(int i=0; i<s.length(); i++) {
 			byteEliminator.add(convertBase64Char(charToBytes[i]));
 		}
+		
 		for(int j=0; j<byteEliminator.size(); j++) {
 			//byte elimination=(byte) (byteEliminator.get(j)^11);
 			//finalArray[j]=(byte) ((byteEliminator.get(j) >> 2)(elimination+byteEliminator.get(j)));
-			finalArray[0]=(byte) ((byteEliminator.get(0)<<2) + (((byteEliminator.get(1)<<2) & 0b110000)>>4));
-			finalArray[1]=(byte) ((byteEliminator.get(1)<<4) + (((byteEliminator.get(2)<<2) & 0b110100)>>2));
-			finalArray[2]=(byte) ((byteEliminator.get(2)<<6) +  ((byteEliminator.get(3)<<2)));
+			finalArray[0]=(byte) ((byteEliminator.get(0)<<2) + ((byteEliminator.get(1)>>4)));
+			finalArray[1]=(byte) ((byteEliminator.get(1)<<4) + ((byteEliminator.get(2)>>2)));
+			finalArray[2]=(byte) ((byteEliminator.get(2)<<6) +  ((byteEliminator.get(3))));
 		}
 		return finalArray;
 	}
@@ -70,6 +71,19 @@ public class Base64Decoder {
 	//3. Complete this method so that it takes in a string of any length
 	//   and returns the full byte array of the decoded base64 characters.
 	public static byte[] base64StringToByteArray(String file) {
-		return null;
+		char [] charToBytes= file.toCharArray();
+		byte [] byteAdder=new byte[3];
+		byte [] allBytes=new byte[(file.length()/4)*3];
+		int value=0;
+		for(int i=0; i<file.length(); i+=4) {
+			System.out.println("char is: " + charToBytes[i]);
+			byteAdder=convert4CharsTo24Bits(file.substring(i, i+4));
+			for(int j=0; j<3; j++) {
+			allBytes[value]=byteAdder[j];
+			value++;
+			//System.out.println("byte is: " + byteAdder[i]);
+			}
+		}
+		return allBytes;
 	}
 }
